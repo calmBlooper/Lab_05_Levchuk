@@ -1,0 +1,31 @@
+﻿<Window x:Class="Lab_05_Levchuk.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModels="clr-namespace:Lab_05_Levchuk.ViewModels"
+        xmlns:local="clr-namespace:Lab_05_Levchuk"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <ViewModels:MainVM />
+    </Window.DataContext>
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" Name="DataGridTest" CanUserAddRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" ></DataGridTextColumn>
+            <DataGridTextColumn Header="ID" ></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Active" ></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="CPU usage" ></DataGridTextColumn>
+               <DataGridTextColumn Header="RAM usage" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Threads number" ></DataGridTextColumn>
+                <DataGridTextColumn Header="User" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Full path" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Date and time of launch" ></DataGridTextColumn>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Add new row" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+    </Grid>
+</Window>
