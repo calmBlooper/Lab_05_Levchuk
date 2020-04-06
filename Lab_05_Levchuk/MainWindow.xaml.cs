@@ -16,7 +16,11 @@ namespace Lab_05_Levchuk
        
         }
 
-}
+        private void DataGrid_Sorting(object sender, System.Windows.Controls.DataGridSortingEventArgs e)
+        {
+
+        }
+    }
    
 
 }

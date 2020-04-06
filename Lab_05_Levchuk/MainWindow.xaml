@@ -6,23 +6,23 @@
         xmlns:ViewModels="clr-namespace:Lab_05_Levchuk.ViewModels"
         xmlns:local="clr-namespace:Lab_05_Levchuk"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="MainWindow" Height="500" Width="1000">
     <Window.DataContext>
         <ViewModels:MainVM />
     </Window.DataContext>
     <Grid>
-        <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ProcessesList, Mode=TwoWay}" Height="400" CanUserAddRows="True" CanUserDeleteRows="False">
+        <DataGrid CanUserSortColumns="True"  VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding ProcessesList, Mode=TwoWay}" Height="400" CanUserAddRows="True" CanUserDeleteRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
-                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"></DataGridTextColumn>
-                <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=Running}" ></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="CPU usage" Binding="{Binding Path=CpuUsage}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="RAM usage" Binding="{Binding Path=RamUsage}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Threads number" Binding="{Binding Path=ThreadsCount}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="User" Binding="{Binding Path=UserName}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="File name" Binding="{Binding Path=FileName}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Full path" Binding="{Binding Path=FilePath}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Date and time of launch" Binding="{Binding Path=LaunchDateTime}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Width="80" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
+                <DataGridTextColumn Header="ID" Width="80" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Active" Width="80" Binding="{Binding Path=Running}" ></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="CPU usage" Width="80" Binding="{Binding Path=CpuUsage}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="RAM usage" Width="80" Binding="{Binding Path=RamUsage}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Threads number" Width="80" Binding="{Binding Path=ThreadsCount}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="User" Width="80" Binding="{Binding Path=UserName}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="File name" Width="100" Binding="{Binding Path=FileName}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Full path" Width="170" Binding="{Binding Path=FilePath}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Date and time of launch" Width="115" Binding="{Binding Path=LaunchDateTime}" ></DataGridTextColumn>
 
 
             </DataGrid.Columns>

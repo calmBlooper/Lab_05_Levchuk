@@ -20,7 +20,7 @@ namespace Lab_05_Levchuk.Tools
         {
             return _canExecute == null || _canExecute(parameter);
         }
-
+    
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }

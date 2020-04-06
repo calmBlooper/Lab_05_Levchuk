@@ -7,7 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <COMReference Include="VBIDE.dll">
+      <Guid>0002e157-0000-0000-c000-000000000046</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
+    <COMReference Include="{000204ef-0000-0000-c000-000000000046}">
+      <Guid>000204ef-0000-0000-c000-000000000046</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+    </COMReference>
+    <COMReference Include="{ea544a21-c82d-11d1-a3e4-00a0c90aea82}">
+      <Guid>ea544a21-c82d-11d1-a3e4-00a0c90aea82</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
