@@ -6,26 +6,27 @@
         xmlns:ViewModels="clr-namespace:Lab_05_Levchuk.ViewModels"
         xmlns:local="clr-namespace:Lab_05_Levchuk"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Window.DataContext>
         <ViewModels:MainVM />
     </Window.DataContext>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" Name="DataGridTest" CanUserAddRows="True">
+        <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ProcessesList, Mode=TwoWay}" Height="400" CanUserAddRows="True" CanUserDeleteRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" ></DataGridTextColumn>
-            <DataGridTextColumn Header="ID" ></DataGridTextColumn>
-                <DataGridCheckBoxColumn Header="Active" ></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="CPU usage" ></DataGridTextColumn>
-               <DataGridTextColumn Header="RAM usage" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Threads number" ></DataGridTextColumn>
-                <DataGridTextColumn Header="User" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Full path" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Date and time of launch" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"  ></DataGridTextColumn>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=Running}" ></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="CPU usage" Binding="{Binding Path=CpuUsage}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="RAM usage" Binding="{Binding Path=RamUsage}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Threads number" Binding="{Binding Path=ThreadsCount}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="User" Binding="{Binding Path=UserName}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="File name" Binding="{Binding Path=FileName}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Full path" Binding="{Binding Path=FilePath}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Date and time of launch" Binding="{Binding Path=LaunchDateTime}" ></DataGridTextColumn>
 
 
             </DataGrid.Columns>
+
         </DataGrid>
-        <Button Content="Add new row" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
     </Grid>
 </Window>
