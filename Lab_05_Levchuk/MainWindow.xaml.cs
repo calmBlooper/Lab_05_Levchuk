@@ -1,6 +1,6 @@
 ﻿
 using System.Windows;
-
+using System.Windows.Controls.Primitives;
 namespace Lab_05_Levchuk
 {
     /// <summary>
@@ -8,6 +8,7 @@ namespace Lab_05_Levchuk
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
       
@@ -15,11 +16,15 @@ namespace Lab_05_Levchuk
 
        
         }
-
-        private void DataGrid_Sorting(object sender, System.Windows.Controls.DataGridSortingEventArgs e)
+        private void columnHeader_Click(object sender, RoutedEventArgs e)
         {
-
+            var columnHeader = sender as DataGridColumnHeader;
+            if (columnHeader != null)
+            {
+                SortHelp.Text= columnHeader.Column.Header.ToString();
+            }
         }
+
     }
    
 
