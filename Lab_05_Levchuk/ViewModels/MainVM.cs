@@ -18,7 +18,8 @@ namespace Lab_05_Levchuk.ViewModels
 {
     class MainVM : INotifyPropertyChanged
     {
-        private string _sortHeader = "", _selId;
+        private Process _currentProcess;
+        private string _sortHeader = "", _selId,_currentProcessInfo;
         private PerformanceCounter theCPUCounter =
 new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<ProcessInfo> _processesList = new List<ProcessInfo>();
@@ -26,6 +27,8 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private bool _pNameS = true, _activeS = true, _threadsCountS = true, _filenameS = true, _pathS = true, _usernameS = true, _idS = true, _cpuUsageS = true, _ramUsageS = true, _dateS = true;
         public MainVM()
         {
+            StopProcessCommand = new RelayCommand(o => StopButtonClick("StopButton"));
+            OpenCommand = new RelayCommand(o => OpenButtonClick("OpenButton"));
             UpdateProcesses();
 
             //MessageBox.Show(RAMSize.ToString());
@@ -41,18 +44,46 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
 
         }
+        private void OpenButtonClick(object sender)
+        {
+            string WorkString = _currentProcess.MainModule.FileName;
+            OpenFolder(WorkString.Substring(0, WorkString.LastIndexOf("\\")));
+        }
 
+        private void StopButtonClick(object sender)
+        {
+            _currentProcess.Kill();
+            MessageBox.Show("Process killed");
+            _currentProcessInfo = "";
+            OnPropertyChanged("CurrentProcessInfo");
+        }
+
+        public string CurrentProcessInfo
+        {
+            set
+            {
+                _currentProcessInfo = value;
+            }
+            get
+            {
+                return _currentProcessInfo;
+            }
+        }
         public List<ProcessInfo> ProcessesList { get => _processesList; set => _processesList = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ICommand StopProcessCommand { set; get; }
+        public ICommand OpenCommand { set; get; }
         public int SelInd
         {
             set
             {
                 _selInd = value;
-                _selId = ProcessesList[value].Id;
-
+                _selId = _processesList[value].Id;
+                _currentProcessInfo = "Name - " + _processesList[value].Name + ", Id - " + _processesList[value].Id + ", File name - " + _processesList[value].FileName;
+                _currentProcess = Process.GetProcessById(Int32.Parse(_selId));
+                OnPropertyChanged("CurrentProcessInfo");
             }
             get
             {
