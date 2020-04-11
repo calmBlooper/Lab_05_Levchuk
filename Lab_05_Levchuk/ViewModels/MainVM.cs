@@ -5,10 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using Lab_05_Levchuk.Models;
@@ -23,12 +21,14 @@ namespace Lab_05_Levchuk.ViewModels
         private PerformanceCounter theCPUCounter =
 new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<ProcessInfo> _processesList = new List<ProcessInfo>();
-        private int RAMSize = GetRAMSize(), _selInd;
+        private int _ramSize = GetRAMSize(), _selInd;
         private bool _pNameS = true, _activeS = true, _threadsCountS = true, _filenameS = true, _pathS = true, _usernameS = true, _idS = true, _cpuUsageS = true, _ramUsageS = true, _dateS = true;
         public MainVM()
         {
             StopProcessCommand = new RelayCommand(o => StopButtonClick("StopButton"));
             OpenCommand = new RelayCommand(o => OpenButtonClick("OpenButton"));
+            ThreadsCommand = new RelayCommand(o => ThreadsButtonClick("ThreadsButton"));
+            ModulesCommand = new RelayCommand(o => ModulesButtonClick("ModulesButton"));
             UpdateProcesses();
 
             //MessageBox.Show(RAMSize.ToString());
@@ -44,6 +44,21 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
 
         }
+
+        private void ModulesButtonClick(string v)
+        {
+            string result = "";
+            for (int i = 0; i < _currentProcess.Modules.Count; i++) result +="Name: "+ _currentProcess.Modules[i].ModuleName + ", Path: " + _currentProcess.Modules[i].FileName+"; ";
+            MessageBox.Show(result);
+        }
+
+        private void ThreadsButtonClick(string v)
+        {
+            string result = "";
+            for (int i = 0; i < _currentProcess.Threads.Count; i++) result += "ID: "+_currentProcess.Threads[i].Id + ", State: " + _currentProcess.Threads[i].ThreadState +", Launch time: "+ _currentProcess.Threads[i].StartTime.ToString() + "\n";
+            MessageBox.Show(result);
+        }
+
         private void OpenButtonClick(object sender)
         {
             string WorkString = _currentProcess.MainModule.FileName;
@@ -75,6 +90,8 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
         public ICommand StopProcessCommand { set; get; }
         public ICommand OpenCommand { set; get; }
+        public ICommand ModulesCommand { set; get; }
+        public ICommand ThreadsCommand { set; get; }
         public int SelInd
         {
             set
@@ -110,7 +127,7 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
             });
             task.Start();
         }
-        private void UpdateProcesses()
+        private async void UpdateProcesses()
         {
 
             var allProcesses = Process.GetProcesses();
@@ -120,7 +137,7 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 try
                 {
                     float RAMUsage = getRAMUsage(allProcesses[i]);
-                    processListCopy.Add(new ProcessInfo(allProcesses[i].ProcessName, allProcesses[i].Id.ToString(), allProcesses[i].Responding, GetCPUUsage(allProcesses[i]) + "%", RAMUsage + " Mbs –  " + RAMUsage / (float)RAMSize * 100 + "%", allProcesses[i].Threads.Count.ToString(), GetUsername(allProcesses[i]),
+                    processListCopy.Add(new ProcessInfo(allProcesses[i].ProcessName, allProcesses[i].Id.ToString(), allProcesses[i].Responding, GetCPUUsage(allProcesses[i]) + "%", RAMUsage + " Mbs –  " + RAMUsage / (float)_ramSize * 100 + "%", allProcesses[i].Threads.Count.ToString(), GetUsername(allProcesses[i]),
                         allProcesses[i].MainModule.ModuleName, allProcesses[i].MainModule.FileName, allProcesses[i].StartTime.ToString()));
                 }
                 catch (Exception ex)
@@ -162,12 +179,22 @@ new PerformanceCounter("Processor", "% Processor Time", "_Total");
             }
             else MessageBox.Show(string.Format("{0} Directory does not exist!", folderPath));
         }
-        private float GetCPUUsage(Process subject)
+        private double GetCPUUsage(Process subject)
         {
-            /*  PerformanceCounter theCPUCounter =
-     new PerformanceCounter("Process", "% Processor Time", subject.ProcessName, true);
-              return theCPUCounter.NextValue() / Environment.ProcessorCount;*/
-            return 0;
+            var startTime = DateTime.UtcNow;
+            var startCpuUsage = subject.TotalProcessorTime;
+
+            Thread.Sleep(500);
+
+            var endTime = DateTime.UtcNow;
+            var endCpuUsage = subject.TotalProcessorTime;
+
+            var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
+            var totalMsPassed = (endTime - startTime).TotalMilliseconds;
+
+            var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
+
+            return cpuUsageTotal * 100;
         }
 
 

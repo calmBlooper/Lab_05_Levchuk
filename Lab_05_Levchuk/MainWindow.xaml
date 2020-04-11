@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModels="clr-namespace:Lab_05_Levchuk.ViewModels"
-        xmlns:local="clr-namespace:Lab_05_Levchuk"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000">
     <Window.DataContext>
@@ -38,8 +37,8 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="50" Width="900" Margin="10" >
             <TextBlock Text="Sorted by:" Width="60" Height="20" />
             <TextBlock Name="SortHelp" Width="60" Height="20" Text="{Binding SortHeader,Mode=TwoWay}"/>
-            <Button Content="See modules" Margin="10"/>
-            <Button Content="See threads" Margin="10"/>
+            <Button Content="See modules" Command="{Binding ModulesCommand}" Margin="10"/>
+            <Button Content="See threads" Command="{Binding ThreadsCommand}" Margin="10"/>
             <Button Content="Open folder" Command="{Binding OpenCommand}" Margin="10"/>
             <Button Content="Stop process" Command="{Binding StopProcessCommand}" Margin="10"/>
             <TextBlock Text="{Binding CurrentProcessInfo,UpdateSourceTrigger=PropertyChanged}" Width="400" Margin="10" />
